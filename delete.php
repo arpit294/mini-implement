@@ -9,3 +9,34 @@
         <button type="submit" class="btn btn-danger">Delete</button>
     </div>
 </form>
+<<<<<<< HEAD
+=======
+
+<script>
+$(document).on("submit", "#deleteform", function(e){
+
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    formData.append("action", "delete");
+
+    $.ajax({
+        url: "database.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+
+        success: function(responseData){
+
+            let data = JSON.parse(responseData);
+
+            let modal = bootstrap.Modal.getInstance(document.getElementById('myModal'));
+            modal.hide();
+
+            $("#row_" + data.id).remove();
+        }
+    });
+});
+</script>
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f

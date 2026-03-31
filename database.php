@@ -1,9 +1,17 @@
 <?php
+<<<<<<< HEAD
 //this is the main class
 class database
 {
     public $conn;
     //this  is function for the database connection 
+=======
+
+class database
+{
+    public $conn;
+
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f
     public function __construct()
     {
         $this->conn = new mysqli("localhost", "root", "", "mini");
@@ -12,6 +20,7 @@ class database
             die("Connection failed");
         }
     }
+<<<<<<< HEAD
     //this is the function for validation   
     private function validateUserFields($name, $age, $city)
     {
@@ -22,11 +31,25 @@ class database
         }
 
         if (((string) $age) === '') {
+=======
+
+    public function insert($name, $age, $city)
+    {
+        $errors = [];
+
+
+        if (empty(trim($name))) {
+            $errors['name'] = "Name is required!";
+        }
+
+        if (empty(trim($age))) {
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f
             $errors['age'] = "Age is required!";
         } elseif (!is_numeric($age)) {
             $errors['age'] = "Age must be number!";
         }
 
+<<<<<<< HEAD
         if (empty(($city))) {
             $errors['city'] = "City is required!";
         }
@@ -38,6 +61,12 @@ class database
     public function insert($name, $age, $city)
     {
         $errors = $this->validateUserFields($name, $age, $city);
+=======
+        if (empty(trim($city))) {
+            $errors['city'] = "City is required!";
+        }
+
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f
 
         if (!empty($errors)) {
             echo json_encode([
@@ -66,7 +95,10 @@ class database
             exit();
         }
     }
+<<<<<<< HEAD
     //this is select function return data from database
+=======
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f
     public function select()
     {
         $sql = "SELECT * FROM users";
@@ -75,12 +107,16 @@ class database
         return $result;
     }
 
+<<<<<<< HEAD
     //get id from database for update and delete
+=======
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f
     public function getById($id)
     {
         $sql = "SELECT * FROM users WHERE id='$id'";
         return $this->conn->query($sql);
     }
+<<<<<<< HEAD
     //this is the update function for update the values in database
     public function update($id, $name, $age, $city)
     {
@@ -94,6 +130,11 @@ class database
             exit();
         }
 
+=======
+
+    public function update($id, $name, $age, $city)
+    {
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f
         $sql = "UPDATE users 
             SET name='$name', age='$age', city='$city' 
             WHERE id='$id'";
@@ -123,7 +164,12 @@ class database
         }
     }
 
+<<<<<<< HEAD
     //this is delete function for remove the data from database.
+=======
+
+
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f
     public function delete($id)
     {
         $sql = "DELETE FROM users WHERE id='$id'";
@@ -147,7 +193,12 @@ class database
 
 
 
+<<<<<<< HEAD
 // this is the action for the perticular operation.
+=======
+//for action pass
+
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f
 if (isset($_POST['action'])) {
 
     $db = new database();
@@ -168,4 +219,7 @@ if (isset($_POST['action'])) {
 
     exit();
 }
+<<<<<<< HEAD
     
+=======
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f

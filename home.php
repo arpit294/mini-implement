@@ -133,12 +133,15 @@ $result = $db->select();
                                 </tr>
                         <?php
                             }
+<<<<<<< HEAD
                         } else {
                         ?>
                             <tr id="noDataRow">
                                 <td colspan="5" class="text-center text-muted">No data found</td>
                             </tr>
                         <?php
+=======
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f
                         }
                         ?>
 
@@ -150,8 +153,74 @@ $result = $db->select();
 
     </div>
 
+<<<<<<< HEAD
     <script src="script.js"></script>
 
 </body>
 
 </html>
+=======
+</body>
+<script>
+    $(document).ready(function() {
+        $("#addBtn").on("click", function() {
+            $.ajax({
+                url: "add.php",
+                type: "GET",
+                success: function(res) {
+                    $("#modalContent").html(res);
+                    let modal = new bootstrap.Modal(document.getElementById('myModal'));
+                    modal.show();
+                }
+            });
+        });
+    });
+
+
+    $(document).on("click", ".edit", function(e) {
+        e.preventDefault();
+        var id = $(this).data("id");
+
+        $.ajax({
+            url: "update.php",
+            type: "GET",
+            data: {
+                id: id
+            },
+            success: function(response) {
+                $("#modalContent").html(response);
+
+                let modal = new bootstrap.Modal(document.getElementById('myModal'));
+                modal.show();
+            }
+        });
+
+    });
+
+
+    $(document).on("click", ".delete", function(e) {
+
+        e.preventDefault();
+        var id = $(this).data("id");
+        $.ajax({
+            url: "delete.php",
+            type: "POST",
+            data: {
+                id: id
+            },
+
+            success: function(response) {
+
+                $("#modalContent").html(response);
+
+                let modal = new bootstrap.Modal(document.getElementById('myModal'));
+                modal.show();
+            }
+        });
+    });
+</script>
+
+</body>
+
+</html>
+>>>>>>> 4ec1e31e1ae34a845e057e4538453e08fbe2743f
