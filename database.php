@@ -13,53 +13,53 @@ class database
         }
     }
 
-public function insert($name, $age, $city)
-{
-    $errors = [];
+    public function insert($name, $age, $city)
+    {
+        $errors = [];
 
-    
-    if (empty(trim($name))) {
-        $errors['name'] = "Name is required!";
-    }
 
-    if (empty(trim($age))) {
-        $errors['age'] = "Age is required!";
-    } elseif (!is_numeric($age)) {
-        $errors['age'] = "Age must be number!";
-    }
+        if (empty(trim($name))) {
+            $errors['name'] = "Name is required!";
+        }
 
-    if (empty(trim($city))) {
-        $errors['city'] = "City is required!";
-    }
+        if (empty(trim($age))) {
+            $errors['age'] = "Age is required!";
+        } elseif (!is_numeric($age)) {
+            $errors['age'] = "Age must be number!";
+        }
 
-   
-    if (!empty($errors)) {
-        echo json_encode([
-            "status" => "error",
-            "errors" => $errors
-        ]);
-        exit();
-    }
+        if (empty(trim($city))) {
+            $errors['city'] = "City is required!";
+        }
 
-    $sql = "INSERT INTO users (name, age, city) 
+
+        if (!empty($errors)) {
+            echo json_encode([
+                "status" => "error",
+                "errors" => $errors
+            ]);
+            exit();
+        }
+
+        $sql = "INSERT INTO users (name, age, city) 
             VALUES ('$name', '$age', '$city')";
 
-    if ($this->conn->query($sql)) {
+        if ($this->conn->query($sql)) {
 
-        $id = $this->conn->insert_id;
+            $id = $this->conn->insert_id;
 
-        echo json_encode([
-            "status" => "success",
-            "data" => [
-                "id" => $id,
-                "name" => $name,
-                "age" => $age,
-                "city" => $city
-            ]
-        ]);
-        exit();
+            echo json_encode([
+                "status" => "success",
+                "data" => [
+                    "id" => $id,
+                    "name" => $name,
+                    "age" => $age,
+                    "city" => $city
+                ]
+            ]);
+            exit();
+        }
     }
-}
     public function select()
     {
         $sql = "SELECT * FROM users";
@@ -74,60 +74,58 @@ public function insert($name, $age, $city)
         return $this->conn->query($sql);
     }
 
- public function update($id, $name, $age, $city)
-{
-    $sql = "UPDATE users 
+    public function update($id, $name, $age, $city)
+    {
+        $sql = "UPDATE users 
             SET name='$name', age='$age', city='$city' 
             WHERE id='$id'";
 
-    if ($this->conn->query($sql)) {
+        if ($this->conn->query($sql)) {
 
-        $responseData = [
-            'status' => 'success',
-            'message' => 'Data updated!',
-            "data" => [
-                "id" => $id,
-                "name" => $name,
-                "age" => $age,
-                "city" => $city
-            ]
-        ];
+            $responseData = [
+                'status' => 'success',
+                'message' => 'Data updated!',
+                "data" => [
+                    "id" => $id,
+                    "name" => $name,
+                    "age" => $age,
+                    "city" => $city
+                ]
+            ];
 
-        echo json_encode($responseData);
-        exit();
-    } else {
+            echo json_encode($responseData);
+            exit();
+        } else {
 
-        echo json_encode([
-            "status" => "error",
-            "message" => "Update failed"
-        ]);
-        exit();
+            echo json_encode([
+                "status" => "error",
+                "message" => "Update failed"
+            ]);
+            exit();
+        }
     }
-}
 
 
 
-public function delete($id)
-{
-    $sql = "DELETE FROM users WHERE id='$id'";
+    public function delete($id)
+    {
+        $sql = "DELETE FROM users WHERE id='$id'";
 
-    if ($this->conn->query($sql)) {
+        if ($this->conn->query($sql)) {
 
-        echo json_encode([
-            "status" => "success",
-            "id" => $id
-        ]);
-        exit();
+            echo json_encode([
+                "status" => "success",
+                "id" => $id
+            ]);
+            exit();
+        } else {
 
-    } else {
-
-        echo json_encode([
-            "status" => "error"
-        ]);
-        exit();
+            echo json_encode([
+                "status" => "error"
+            ]);
+            exit();
+        }
     }
-}
-
 }
 
 
@@ -138,12 +136,12 @@ if (isset($_POST['action'])) {
 
     $db = new database();
 
-   
+
     if ($_POST['action'] == "insert") {
         $db->insert($_POST['name'], $_POST['age'], $_POST['city']);
     }
 
-  
+
     if ($_POST['action'] == "update") {
         $db->update($_POST['id'], $_POST['name'], $_POST['age'], $_POST['city']);
     }
@@ -152,5 +150,5 @@ if (isset($_POST['action'])) {
         $db->delete($_POST['id']);
     }
 
-    exit(); 
+    exit();
 }
